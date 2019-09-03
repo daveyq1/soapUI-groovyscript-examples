@@ -1,2 +1,2 @@
 # SoapUI-files
-Useful examples found and created myself during my time with SoapUI
+Useful Groovyscript I've discovered during my time with SoapUI
