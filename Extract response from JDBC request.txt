@@ -1,0 +1,22 @@
+//extract the IDs from the JDBC response and add to a testsuite custom property per ID
+def xmlResponse = context.expand('${Extract_Last_Seasons_CarSetup_Parameter_Definitions#ResponseAsXML}')
+def responseSlurper = new XmlSlurper().parseText(xmlResponse)
+def result = responseSlurper.ResultSet.toString()
+//Split the IDs
+def array = result.split("(?<=\\G.{36})")
+
+//check there is at least one Id
+assert array.size() > 0
+
+//Build the string to assign to a custom property
+def newArray = new String[array.length]
+
+for(i in 0 .. array.size()-1){
+	//Format the string and replace the element in the array
+	def string = '<id>?</id>'	
+	newArray[i] = string.replace('?', array[i])
+}
+def finalString = newArray.join()
+
+//Set the resulting string to a testsuite custom property
+testRunner.testCase.testSuite.setPropertyValue( "Parameter_DefinitionId_Previous_Season_Car_Setup", finalString)

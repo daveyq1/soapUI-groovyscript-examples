@@ -1,0 +1,25 @@
+//Extract the CarDefinitionName
+def response = context.expand( '${GetSetupDefinitionById#Response}' )
+def pxml = new XmlSlurper().parseText(response)
+def carDefinitionName = pxml.'**'.findAll{it.name() == 'CarDefinitionHeader'}*.Name*.text() as List
+
+for(i in 0 .. carDefinitionName.size()-1) {
+   def name =carDefinitionName.get(i)
+   def index = i.toString()
+   testRunner.testCase.testSuite.setPropertyValue( "CarDefinitionName" + index, name)
+}
+
+//OR....
+
+//extract Engineer from response and add to Testsuite custom property Engineer
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context );
+def responseHolder = groovyUtils.getXmlHolder("GetEngineersByPerformanceEvent#Response");
+
+responseHolder.declareNamespace( 'a', 'http://schemas.microsoft.com/2003/10/Serialization/Arrays')
+def nodes = responseHolder.getNodeValues("//a:string") as List
+
+for(i in 0 .. nodes.size()-1) {
+   def name =nodes.get(i)
+   def index = i.toString()
+   testRunner.testCase.testSuite.setPropertyValue( "Engineer" + index, name)
+}

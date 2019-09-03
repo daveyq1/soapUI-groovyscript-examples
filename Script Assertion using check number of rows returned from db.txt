@@ -1,0 +1,7 @@
+import com.eviware.soapui.model.testsuite.TestStepResult.TestStepStatus;
+//ensure only 1 row is returned from database
+def xmlResponse = context.responseAsXml
+def responseSlurper = new XmlSlurper().parseText(xmlResponse)
+def resultSetRowSize = responseSlurper.ResultSet.Row.size()
+
+assert resultSetRowSize == 1

@@ -1,0 +1,5 @@
+groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+holder = groovyUtils.getXmlHolder ("Check_ReleaseBundles_Record_Created#ResponseAsXML")
+workstreamId = holder.getNodeValue("//RELEASEID").toLowerCase()
+
+context.testCase.testSuite.setPropertyValue("ReleaseIssueNumber",releaseIssueNumber)

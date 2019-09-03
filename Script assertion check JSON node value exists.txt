@@ -1,0 +1,23 @@
+import groovy.json.JsonSlurper
+
+retailer = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "retailer")
+JsonSlurper jsonSlurper = new JsonSlurper()
+def json = new groovy.json.JsonSlurper().parseText(context.response)
+
+len = "${json.Data.size()}".toInteger()
+
+if (len > 0){
+	found = false
+	for(i=0;i<len;i++){
+		id = json.id[i].toUpperCase()
+		if (id == retailer){
+			found = true
+			log.info 'The retailer ' + retailer + ' was returned'
+			break
+		}
+	}
+	assert found == true,'The retailer ' + retailer + ' was not returned'
+	
+}else{
+	log.error('There were no retailers returned')
+}

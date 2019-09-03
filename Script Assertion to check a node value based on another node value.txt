@@ -1,0 +1,11 @@
+//check the FolderId is correct for the carsetupid
+def response = context.expand( '${GetStructuredCarSetupsByEventAndEngineer#Response}' )
+def pxml = new XmlSlurper().parseText(response)
+
+def carSetupId = context.expand('${#TestSuite#Car_SetupId}')
+def actualFolderId = context.expand('${#TestSuite#Sandpit_FolderId}')
+
+def array = pxml.'**'.findAll{it.name() == 'Id' && it.text() == carSetupId}*.parent()*.ParentFolderId*.text()
+assert array.size() == 1
+def returnedFolderId = array[0].toString()
+assert actualFolderId == returnedFolderId

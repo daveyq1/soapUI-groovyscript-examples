@@ -1,0 +1,7 @@
+//check the Id is correct
+def response = context.expand( '${SaveParameterDefinitionIdentifier#Response}' )
+def pxml = new XmlSlurper().parseText(response)
+def returnedParameterDefinitionIdentifierId = pxml.'**'.findAll{it.name() == 'SaveParameterDefinitionIdentifierResult'}*.Id*.text() as List
+
+actualParameterDefinitionIdentifierId = context.expand('${#TestSuite#Parameter_Definition_IdentifierId}').toLowerCase()
+assert returnedParameterDefinitionIdentifierId[0].toString().toLowerCase() == actualParameterDefinitionIdentifierId

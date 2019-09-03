@@ -1,0 +1,2 @@
+def request = testRunner.testCase.getTestStepsOfType(com.eviware.soapui.impl.wsdl.teststeps.RestTestRequestStep.class).each{teststep ->
+teststep.testRequest.setSslKeystore("")}

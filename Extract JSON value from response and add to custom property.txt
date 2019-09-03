@@ -1,0 +1,11 @@
+import groovy.json.JsonSlurper
+
+responseContent = testRunner.testCase.getTestStepByName("digitizeTicket_t1_c1_bx").getPropertyValue("response")
+
+try{
+	slurperresponse = new JsonSlurper().parseText(responseContent)
+	transitBundleId = (slurperresponse.transitBundle.bundleId)
+	testRunner.testCase.testSuite.setPropertyValue("transitBundleId",transitBundleId)
+}catch(Exception ex){
+	log.info ex
+}

@@ -1,0 +1,4 @@
+def fileName = testRunner.testCase.testSuite.getPropertyValue("registerTicketRequestJson")
+def projectPath = new com.eviware.soapui.support.GroovyUtils(context).projectPath //gets the path of the project root
+dir = projectPath + '\\files\\registerTicketJsonFiles\\'
+filePath = dir + fileName

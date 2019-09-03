@@ -1,0 +1,6 @@
+groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+holder = groovyUtils.getXmlHolder ("CreateBranch#Response")
+holder.namespaces["a"]="http://schemas.datacontract.org"
+workstreamId = holder.getNodeValue("//a:WorkstreamId").toLowerCase()
+
+testRunner.testCase.testSuite.setPropertyValue( "WorkstreamId", workstreamId)

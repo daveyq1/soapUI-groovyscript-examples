@@ -1,0 +1,14 @@
+prop=testRunner.testCase.testSuite.project.getPropertyValue('responseTimeSlasFilePath')
+def projectPath = new com.eviware.soapui.support.GroovyUtils(context).projectPath //gets the path of the project root
+filePath = projectPath + prop
+
+File file = new File(filePath)
+def list = file.readLines()
+
+//add each item in the list as a project custom property
+for (i = 0; i <list.size(); i++) {
+	def properties =list[i].split('=')
+	propertyName = properties[0] + 'ResponseTimeSla'
+	propertyValue= properties[1]
+	testRunner.testCase.testSuite.setPropertyValue(propertyName, propertyValue)	   
+}

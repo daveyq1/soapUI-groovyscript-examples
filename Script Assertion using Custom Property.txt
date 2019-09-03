@@ -1,0 +1,8 @@
+//check the Id is correct
+groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+holder = groovyUtils.getXmlHolder ("CreateBranch#Response")
+holder.namespaces["a"]="http://schemas.datacontract.org/2004/07/Whiteways.CarSetup.Model"
+returnedBranchId = holder.getNodeValue("//a:Id").toLowerCase()
+
+actualBranchId = context.expand('${#TestSuite#BranchId}').toLowerCase()
+assert returnedBranchId == actualBranchId

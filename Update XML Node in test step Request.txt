@@ -1,0 +1,10 @@
+//Update XML Node in request
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context );
+def requestHolder = groovyUtils.getXmlHolder("GetReleaseParameterInstances#Request");
+
+requestHolder.declareNamespace( 'a', 'http://schemas.microsoft.com/2003/10/Serialization/Arrays')
+
+requestHolder["//a:idsOfInstances"] = "test"
+
+requestHolder.updateProperty()
+context.requestContent = requestHolder.xml

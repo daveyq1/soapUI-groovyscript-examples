@@ -1,0 +1,12 @@
+//Update test step's payload or request headers from REST resource's request definition
+//Source: https://sqa.stackexchange.com/questions/16374/soapui-refresh-update-test-steps-payload-or-request-headers-from-rest-resource
+//Get the value of the project's request 
+   def prj = testRunner.testCase.testSuite.project.workspace.getProjectByName("Project 1").getProperty(“Request 1”).getValue()
+
+//get the test case's request  
+      tCase =  testRunner.testCase.testSteps["testSteps"].getProperty(“Request 1”).getValue()
+
+tcase = prj 
+
+//set the new request to be that of the project
+    tcase.getHttpRequest().setRequestHeaders(headers)

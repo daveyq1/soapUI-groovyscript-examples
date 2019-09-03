@@ -1,0 +1,17 @@
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
+def filePath = 'C:\\wrongfilepath'
+
+try
+{
+	//read the file
+	def jsonSlurper = new JsonSlurper()
+	def data = jsonSlurper.parseText(new File(filePath).text)
+}
+catch(Exception e)
+{
+	log.info 'Problem reading the file: ' + filePath
+	failure=e.toString()
+	testRunner.fail(failure)
+}

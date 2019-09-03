@@ -1,0 +1,16 @@
+//extract guids from response writes them to a file (due to the size) and updates a CustomProperty with the file location
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context );
+def responseHolder = groovyUtils.getXmlHolder("GetReleaseParameterInstanceIdsByTagId#Response");
+
+responseHolder.declareNamespace( 'a', 'http://schemas.microsoft.com/2003/10/Serialization/Arrays')
+def nodes = responseHolder.getNodeValues("//a:Key") as List
+def string = nodes.join(",")
+
+def newString = string.replaceAll(',','</a:guid>')
+def secondnewString = newString.replaceAll('>','><a:guid>')
+def finalString = '<a:guid>'+ secondnewString +'</a:guid>'
+
+def fileName = "Release_Parameter_Instances_GUID.txt"
+def filePath = "C:\\Temp\\"+ fileName
+def inputFile = new File("C:\\Temp\\"+fileName)
+inputFile.write(finalString)

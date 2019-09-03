@@ -1,0 +1,10 @@
+//Clear values of all project environment custom properties
+for (testSuite in testRunner.testCase.testSuite.project.testSuiteList){
+ 	
+	if (testSuite.getPropertyCount() > 0){	
+	 	def myTestSuite = testRunner.testCase.testSuite.project.getTestSuiteByName(testSuite.name)
+	 	for (prop in myTestSuite.getPropertyList()){
+	 		testSuite.setPropertyValue(prop.name,'')
+	 	}
+	}
+ }

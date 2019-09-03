@@ -1,0 +1,20 @@
+testStep = messageExchange.modelItem.testStep.name
+propertyName = testStep + 'ResponseTimeSla'
+
+//get the expected response time from the custom Properties
+groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+expectedResponseTime = context.expand('${#TestSuite#' + propertyName +'}').toInteger()
+
+//get the actual response time from the teststep response
+actualResponseTime = messageExchange.timeTaken.toInteger()
+
+baselineTimeCheck=false
+
+if (actualResponseTime>expectedResponseTime) {
+	log.info 'Response time check: ' + testStep + ' has failed.  ' + 'Baseline time: ' + expectedResponseTime + 'ms, Actual time: ' + actualResponseTime + 'ms'
+	baselineTimeCheck=true
+} else{
+	log.info 'Response time check: ' + testStep + ' is acceptable.  ' + 'Baseline time: ' + expectedResponseTime + 'ms, Actual time: ' + actualResponseTime + 'ms'
+}
+
+assert baselineTimeCheck==false

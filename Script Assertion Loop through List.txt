@@ -1,0 +1,15 @@
+//check the Id is correct
+def response = context.expand( '${GetSimulationDefinitions_2nd_Call#Response}' )
+def pxml = new XmlSlurper().parseText(response)
+def returnedId = pxml.'**'.findAll{it.name() == 'SimulationDefinitionHeader'}*.Id*.text() as List
+actualId = context.expand('${#TestSuite#Simulation_DefinitionId}').toLowerCase()
+def length = returnedId.size().toInteger()
+def found = false
+
+for(i=0;i<length;i++){
+	//log.info returnedId[i].toString().toLowerCase()
+	if(returnedId[i].toString().toLowerCase() == actualId){
+		found = true
+	}
+}
+assert found == true

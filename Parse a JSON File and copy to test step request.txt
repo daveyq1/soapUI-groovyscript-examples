@@ -1,0 +1,21 @@
+//Copy JSON from a test step response to a test step request
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
+//Parse the test step response
+responseContent = testRunner.testCase.getTestStepByName("digitizeTicket_t1_c1_bx").getPropertyValue("response")
+jsonResponse = new JsonSlurper().parseText(responseContent)
+
+//Parse the test step request
+requestContent = testRunner.testCase.getTestStepByName("digitizeTicket_t1_c1_bx").getPropertyValue("request")
+jsonRequest = new JsonSlurper().parseText(requestContent)
+
+//Copy from request to the response
+jsonRequest.transitBundle = jsonResponse.transitBundle
+
+//Convert the request string to JSON
+def jsonReqAsString = JsonOutput.toJson(jsonRequest)
+
+//save the request to the test step
+def restRequest = testRunner.testCase.getTestStepByName('digitizeTicket_t1_c1_bx')
+restRequest.setPropertyValue('Request',jsonReqAsString)

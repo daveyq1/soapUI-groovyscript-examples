@@ -1,0 +1,5 @@
+//Add this to a Script Assertion
+log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+log.info("Request size :" + messageExchange.requestContent.size())
+log.info("Response size :" + messageExchange.responseContent.size())
+log.info("Time :" + messageExchange.getTimeTaken())

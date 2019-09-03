@@ -1,0 +1,24 @@
+//Read from config file and apply all custom properties required for TestSuite Teardown script
+configFilePath = '..\\config.txt'
+def file = new File(configFilePath)
+def map = [:]
+
+file.eachLine { line ->
+	def object = line.split("=")
+	map.put(object[0], object[1])
+	log.info object[0]
+	switch(object[0])
+	{
+		case "testResultsDbHost":
+		testRunner.testCase.testSuite.project.setPropertyValue('testResultsDbHost',object[1])
+
+		case "testResultsDbInstance":
+		testRunner.testCase.testSuite.project.setPropertyValue('testResultsDbInstance',object[1])
+		
+		case "testResultsDbuser":
+		testRunner.testCase.testSuite.project.setPropertyValue('testResultsDbuser',object[1])
+		
+		case "testResultsDbPass":
+		testRunner.testCase.testSuite.project.setPropertyValue('testResultsDbPass',object[1])		
+	}
+}

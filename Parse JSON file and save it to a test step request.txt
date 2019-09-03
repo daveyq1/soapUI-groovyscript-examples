@@ -1,0 +1,29 @@
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
+def fileName = testRunner.testCase.testSuite.getPropertyValue("registerTicketRequestJsonFile")
+def projectPath = new com.eviware.soapui.support.GroovyUtils(context).projectPath //gets the path of the project root
+dir = projectPath + '\\files\\registerTicketJsonFiles\\'
+filePath = dir + fileName
+
+def jsonSlurper = new JsonSlurper()
+//attempt to parse the file and save to the request in the registerTicket test step
+try
+{
+	def data = jsonSlurper.parseText(new File(filePath).text)
+
+	//convert the parsed file to JSON
+	def jsonReqAsString = JsonOutput.toJson(data)
+
+	//format the json
+	def json = JsonOutput.prettyPrint(jsonReqAsString)
+
+	//save the request to the test step
+	def restRequest = context.testCase.getTestStepByName('registerTicket')
+	restRequest.setPropertyValue('Request', json)
+}
+catch(Exception e)
+{
+	failure=e.toString()
+	testRunner.fail(failure)
+}

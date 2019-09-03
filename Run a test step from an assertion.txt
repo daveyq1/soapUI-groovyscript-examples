@@ -1,0 +1,7 @@
+import com.eviware.soapui.support.types.StringToObjectMap
+import com.eviware.soapui.impl.wsdl.testcase.WsdlTestCaseRunner
+
+def Runner = new WsdlTestCaseRunner(messageExchange.modelItem.testStep.testCase, new StringToObjectMap())
+
+yourTestStep= messageExchange.modelItem.testStep.testCase.testSuite.project.testSuites["Library"].testCases["checkResponseTimes"].testSteps["checkResponseTimes"]
+yourTestStep.run(Runner,context)

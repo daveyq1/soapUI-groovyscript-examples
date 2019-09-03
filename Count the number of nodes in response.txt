@@ -1,0 +1,3 @@
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+def holder = groovyUtils.getXmlHolder("GetEngineersByPerformanceEvent#Response")
+assert holder["count(//*:string)"].toInteger() > 0

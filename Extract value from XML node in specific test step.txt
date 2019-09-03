@@ -1,0 +1,10 @@
+//Verify Sandbox id is correct
+import com.eviware.soapui.model.testsuite.TestStepResult.TestStepStatus;
+
+//sandboxID from CreateSandbox response
+groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+holder = groovyUtils.getXmlHolder ("CreateSandbox#Response")
+holder.namespaces["a"]="http://schemas.datacontract.org"
+actualSandboxId = holder.getNodeValue("//a:Id").toLowerCase()
+
+assert expectedSandboxId == actualSandboxId

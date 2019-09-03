@@ -1,0 +1,17 @@
+//check the Id is correct
+def response = context.expand( '${GetCarDefinitions_2nd_Call#Response}' )
+def pxml = new XmlSlurper().parseText(response)
+def returnedSystemDefinitionId = pxml.'**'.findAll{it.name() == 'CarDefinitionHeader'}*.Id*.text() as List
+
+actualSystemDefinitionId = context.expand('${#TestSuite#System_DefinitionId}').toLowerCase()
+
+def length = returnedSystemDefinitionId.size().toInteger()
+def found = false
+
+for(i=0;i<length;i++){
+	//log.info returnedSystemDefinitionId[i].toString().toLowerCase()
+	if(returnedSystemDefinitionId[i].toString().toLowerCase() == actualSystemDefinitionId){
+		found = true
+	}
+}
+assert found == true
